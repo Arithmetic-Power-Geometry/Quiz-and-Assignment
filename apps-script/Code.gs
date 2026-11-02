@@ -1,7 +1,6 @@
 /** MBA 3002 submissions. Standalone script writing to the designated private Google Sheet.
  * Deploy as web app: execute as Me; access Anyone.
- * Set Script Property QUIZ_TOKEN to a long random secret.
- * IMPORTANT: public clients cannot keep a token secret. This is for low-stakes quizzes.
+ * Public client submissions are unauthenticated; for low-stakes classroom practice only.
  */
 const HEADERS=['Timestamp','Quiz','Roll Number','Student Name','Department','Semester','Score','Maximum','Duration Seconds',...Array.from({length:10},(_,i)=>'Answer '+(i+1))];
 function doPost(e){
@@ -20,4 +19,14 @@ function doPost(e){
     return ContentService.createTextOutput(JSON.stringify({ok:true,score})).setMimeType(ContentService.MimeType.JSON);
   }catch(err){return ContentService.createTextOutput(JSON.stringify({ok:false,error:String(err.message)})).setMimeType(ContentService.MimeType.JSON)}
   finally{lock.releaseLock()}
+}
+
+// Run this once from the Apps Script editor to verify spreadsheet permissions.
+// It writes a clearly marked TEST row; delete it after verification.
+function testConnection() {
+  const spreadsheet = SpreadsheetApp.openById('1cYOVbbGK7zv_oYGrxiLf3j6UIRfMiI8THQdePE6AH04');
+  const sheet = spreadsheet.getSheetByName('Submissions');
+  if (!sheet) throw new Error('Submissions tab not found');
+  sheet.appendRow([new Date(), 'Quiz I', 'TEST-CONNECTION', 'System Test', 'Management', 'III', 0, 10, 0, ...Array(10).fill('')]);
+  Logger.log('SUCCESS: Test row added to '+spreadsheet.getUrl());
 }
