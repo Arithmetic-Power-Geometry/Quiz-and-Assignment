@@ -1,4 +1,8 @@
 # Central results setup (faculty only)
+
+**Designated faculty results account:** akakhtar.2024@gmail.com
+
+Create the private results Sheet while signed into this account, or share an existing results Sheet with this address as an Editor. This address is the intended faculty owner/download user, not a password or a browser-side access control. Only Google account permissions can grant access. No access is automatically granted by listing an email here.
 1. Create a **private** Google Sheet named MBA 3002 Quiz Results under your own Google account.
 2. In the Sheet select Extensions → Apps Script. Paste the contents of apps-script/Code.gs and save.
 3. Deploy → New deployment → Web app. Execute as **Me**, access **Anyone**. Authorize Google access.
